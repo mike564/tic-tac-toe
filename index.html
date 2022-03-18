@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Tic-Tac-Toe</title>
+</head>
+<body>
+    <header>
+        <h1>Tic-Tac-Toe</h1>
+    </header>
+    <section class="msg-section">
+        <p>Enter name's below and click "START" to play</p>
+    </section>
+    <section class="board">
+        <div class="tl" data-row = "0" data-col = "0"></div>
+        <div class="tc" data-row = "0" data-col = "1"></div>
+        <div class="tr" data-row = "0" data-col = "2"></div>
+        <div class="cl" data-row = "1" data-col = "0"></div>
+        <div class="cc" data-row = "1" data-col = "1"></div>
+        <div class="cr" data-row = "1" data-col = "2"></div>
+        <div class="bl" data-row = "2" data-col = "0"></div>
+        <div class="bc" data-row = "2" data-col = "1"></div>
+        <div class="br" data-row = "2" data-col = "2"></div>
+    </section>
+    <section class="start-section">
+        <label for="player-one-name">Player One Name</label>
+        <input type="text" class="player-one-name" id="player-one-name" placeholder="Default is X if left blank">
+        <label for="player-one-name">Player Two Name</label>
+        <input type="text" class="player-two-name" id="player-two-name" placeholder="Leave blank to play against computer">
+        <button class="start-btn">START</button>
+    </section>
+    <script src="./js/main.js"></script>
+</body>
+</html>
