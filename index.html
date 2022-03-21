@@ -11,27 +11,58 @@
     <header>
         <h1>Tic-Tac-Toe</h1>
     </header>
-    <section class="msg-section">
-        <p>Enter name's below and click "START" to play</p>
-    </section>
-    <section class="board">
-        <div class="tl" data-row = "0" data-col = "0"></div>
-        <div class="tc" data-row = "0" data-col = "1"></div>
-        <div class="tr" data-row = "0" data-col = "2"></div>
-        <div class="cl" data-row = "1" data-col = "0"></div>
-        <div class="cc" data-row = "1" data-col = "1"></div>
-        <div class="cr" data-row = "1" data-col = "2"></div>
-        <div class="bl" data-row = "2" data-col = "0"></div>
-        <div class="bc" data-row = "2" data-col = "1"></div>
-        <div class="br" data-row = "2" data-col = "2"></div>
-    </section>
-    <section class="start-section">
-        <label for="player-one-name">Player One Name</label>
-        <input type="text" class="player-one-name" id="player-one-name" placeholder="Default is X if left blank">
-        <label for="player-one-name">Player Two Name</label>
-        <input type="text" class="player-two-name" id="player-two-name" placeholder="Leave blank to play against computer">
-        <button class="start-btn">START</button>
-    </section>
+
+    
+    <main>
+        <section class="start-section ">
+            <h2>Insert Names</h2>
+
+            <section class="name-section">
+                <div>
+                    <label for="player-one-name">Player X:</label>
+                    <input type="text" class="player-name-input player-x" id="player-one-name" placeholder="Enter a name">
+                </div>
+                <div class="name-input-2 hidden">
+                    <label for="player-two-name">Player O:</label>
+                    <input type="text" class="player-name-input player-o" id="player-two-name" placeholder="Enter a name">
+                </div>
+            </section>
+
+            <section class="cb-section">
+                <input type="checkbox" id="com-check" checked><label for="com-check" id="cb-label">Play against computer?</label></section>
+            <button class="start-btn">START</button>
+        </section>
+
+
+        <section class="msg-section">
+            <p>Enter name's below and click "START" to play</p>
+        </section>
+
+        <section class="game-area dim">
+            <section class="player-info player-x green-border">
+                <h3></h3>
+                <span>X</span>
+            </section>
+            <section class="board">
+                <div class="tl" data-row = "0" data-col = "0"></div>
+                <div class="tc" data-row = "0" data-col = "1"></div>
+                <div class="tr" data-row = "0" data-col = "2"></div>
+                <div class="cl" data-row = "1" data-col = "0"></div>
+                <div class="cc" data-row = "1" data-col = "1"></div>
+                <div class="cr" data-row = "1" data-col = "2"></div>
+                <div class="bl" data-row = "2" data-col = "0"></div>
+                <div class="bc" data-row = "2" data-col = "1"></div>
+                <div class="br" data-row = "2" data-col = "2"></div>
+            </section>
+            <section class="player-info player-o">
+                <h3></h3>
+                <span>O</span>
+            </section>
+        </section>
+        
+        <button class="reset-btn hidden">Play Again</button>
+        
+    </main>
     <script src="./js/main.js"></script>
 </body>
 </html>
