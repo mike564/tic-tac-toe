@@ -38,30 +38,31 @@
             <p>Enter name's below and click "START" to play</p>
         </section>
 
-        <section class="game-area dim">
-            <section class="player-info player-x green-border">
-                <h3></h3>
-                <span>X</span>
+        <section class="game-section dim">
+            <section class="game-area">
+                <section class="player-info player-x green-border">
+                    <h3></h3>
+                    <span>X</span>
+                </section>
+                <section class="board">
+                    <div class="tl" data-row = "0" data-col = "0"></div>
+                    <div class="tc" data-row = "0" data-col = "1"></div>
+                    <div class="tr" data-row = "0" data-col = "2"></div>
+                    <div class="cl" data-row = "1" data-col = "0"></div>
+                    <div class="cc" data-row = "1" data-col = "1"></div>
+                    <div class="cr" data-row = "1" data-col = "2"></div>
+                    <div class="bl" data-row = "2" data-col = "0"></div>
+                    <div class="bc" data-row = "2" data-col = "1"></div>
+                    <div class="br" data-row = "2" data-col = "2"></div>
+                </section>
+                <section class="player-info player-o">
+                    <h3></h3>
+                    <span>O</span>
+                </section>
             </section>
-            <section class="board">
-                <div class="tl" data-row = "0" data-col = "0"></div>
-                <div class="tc" data-row = "0" data-col = "1"></div>
-                <div class="tr" data-row = "0" data-col = "2"></div>
-                <div class="cl" data-row = "1" data-col = "0"></div>
-                <div class="cc" data-row = "1" data-col = "1"></div>
-                <div class="cr" data-row = "1" data-col = "2"></div>
-                <div class="bl" data-row = "2" data-col = "0"></div>
-                <div class="bc" data-row = "2" data-col = "1"></div>
-                <div class="br" data-row = "2" data-col = "2"></div>
-            </section>
-            <section class="player-info player-o">
-                <h3></h3>
-                <span>O</span>
-            </section>
+            
+            <button class="reset-btn">Restart</button>
         </section>
-        
-        <button class="reset-btn hidden">Play Again</button>
-        
     </main>
     <script src="./js/main.js"></script>
 </body>

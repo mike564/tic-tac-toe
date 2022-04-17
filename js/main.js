@@ -2,7 +2,7 @@
 
 let players = (function(){
     document.querySelector('.start-btn').addEventListener('click',storePlayerNames);
-    document.querySelector('.start-btn').addEventListener('click',setPlayerNames);
+    document.querySelector('.start-btn').addEventListener('click',displayPlayerNames);
     let playerXName;
     let playerOName;
     
@@ -24,7 +24,7 @@ let players = (function(){
         }
     }
 
-    function setPlayerNames(){
+    function displayPlayerNames(){
         document.querySelector('.player-info.player-x h3').textContent = playerXName;
         document.querySelector('.player-info.player-o h3').textContent = playerOName;
     }
@@ -33,44 +33,66 @@ let players = (function(){
         return{playerXName,playerOName};
     }
 
-    return(getPlayerNames);
+    return{getPlayerNames};
 })();
 
-let displayController = (function(){
-    document.querySelectorAll('.board div').forEach(function(spot){
-        spot.addEventListener('click',addGreenBorder);
-        spot.addEventListener('click',showMsg);
-    })
-    
+
+let GUI = (function(){
     document.querySelector('.start-btn').addEventListener('click',function(){
         toggleVisivility(document.querySelector('.start-section'));
-        toggleDimming(document.querySelector('.game-area'));
+        toggleDimming(document.querySelector('.game-section'));
+        resetGUI();
     });
 
     document.querySelector('.reset-btn').addEventListener('click',function(){
-        toggleDimming(document.querySelector('.game-area'));
+        toggleDimming(document.querySelector('.game-section'));
         toggleVisivility(document.querySelector('.start-section'));
-        toggleVisivility(document.querySelector('.reset-btn'));
     });
 
     document.getElementById('com-check').addEventListener('change',function(){toggleVisivility(document.querySelector('.name-input-2'))});
     
+    function resetGUI(){
+        document.querySelector('.player-info.player-x').classList.add('green-border');
+        document.querySelector('.player-info.player-o').classList.remove('green-border');
+        document.querySelector('.msg-section p').textContent = "Currently " + players.getPlayerNames().playerXName+"'s turn";
+        document.querySelectorAll('.board div').forEach(function(spot){
+            spot.addEventListener('click',addGreenBorder);
+            spot.addEventListener('click',updateMsg);
+        })
+    }
 
-    function showMsg(){
+    function updateMsg(){
+        if(game.evaluateGame()=="Game is not yet finished"){
+            if(gameBoard.getCurrentMarker()=='O'){
+                document.querySelector('.msg-section p').textContent = "Currently " + players.getPlayerNames().playerXName+"'s turn";
+            }
+            else{
+                document.querySelector('.msg-section p').textContent = "Currently " + players.getPlayerNames().playerOName+"'s turn";
+            }
+            
+        }
 
+        else{
+            document.querySelector('.msg-section p').textContent = game.evaluateGame();
+        }
+        
     }
 
     function addGreenBorder(e){
-        console.log('hi')
-        document.querySelectorAll('.player-info').forEach(function(thisNode){
-            if(thisNode.classList.contains('green-border')){
-                thisNode.classList.remove('green-border');
-            }
-            else{
-                thisNode.classList.add('green-border');
-            }
-        })
+        document.querySelector('.player-info.player-x').classList.toggle('green-border');
+        document.querySelector('.player-info.player-o').classList.toggle('green-border');
+
         e.target.removeEventListener('click',addGreenBorder);
+
+        setTimeout(function(){
+           if(game.evaluateGame() != "Game is not yet finished"){
+            document.querySelectorAll('.board div').forEach(function(spot){
+                spot.removeEventListener('click',addGreenBorder);
+                spot.removeEventListener('click',updateMsg);
+            })
+        } 
+        },1);
+        
     }
 
     function toggleVisivility(section){
@@ -89,11 +111,11 @@ const gameBoard = (function(){
     document.querySelector('.start-btn').addEventListener('click',initializeBoard);
 
     function initializeBoard(){
+        currentMarker = 'X'
         board = [[" "," "," "],[" "," "," "],[" "," "," "]];
         document.querySelectorAll('.board div').forEach(function(spot){
             spot.textContent="";
             spot.addEventListener('click',mark);
-            spot.addEventListener('click',game.evaluateGame);
         })
     }
 
@@ -111,6 +133,9 @@ const gameBoard = (function(){
         e.target.textContent=currentMarker;
         board[e.target.dataset.row][e.target.dataset.col] = currentMarker;
         e.target.removeEventListener('click',gameBoard.mark);
+        if(game.evaluateGame() != "Game is not yet finished"){
+            disableMarking();
+        }
         changeMarker();
     }
 
@@ -118,13 +143,23 @@ const gameBoard = (function(){
         return board;
     }
 
+    function disableMarking(){
+        document.querySelectorAll('.board div').forEach(function(spot){
+            spot.removeEventListener('click',mark);
+        })
+    }
+
+    function getCurrentMarker(){
+        return currentMarker;
+    }
     //gameBoard public functions. mark() must be returned in order to remove the event listner, as done in endGame()
-    return{mark,getBoard};
+    return{getBoard,getCurrentMarker};
 })();
 
 const game = (function(){
+    let result = "Game is not yet finished";
 
-    function checkGame(){
+    function checkBoard(){
         let board = gameBoard.getBoard();
 
         if(board[0].toString()==[board[0][0],board[0][0],board[0][0]].toString() && board[0].indexOf(" ")==-1){
@@ -168,32 +203,33 @@ const game = (function(){
     }
 
     function evaluateGame(){
-        let result = checkGame();
-        if(result=="X" || result=="O"){
-            console.log(result+" is the Winner!")
-            endGame();
-            return result;
+        let evaluation = checkBoard();
+        if(evaluation=="X" || evaluation=="O"){
+            console.log(evaluation + " is the Winner!")
+            //endGame();
+            result = evaluation + " is the Winner!";
+            document.querySelector('.msg-section p').textContent=result;
+            return evaluation + " is the Winner!"
         }
-        else if(result=="Draw"){
+        else if(evaluation=="Draw"){
             console.log("Game has ended in a draw")
-            endGame();
-            return result;
+            //endGame();
+            result = "Game has ended in a draw";
+            document.querySelector('.msg-section p').textContent=result;
+            return "Game has ended in a draw";
         }
         else{
             console.log("Game is not yet finished")
+            result = "Game is not yet finished";
             return "Game is not yet finished";
         } 
     }
 
-    function endGame(){
-        document.querySelectorAll('.board div').forEach(function(spot){
-            spot.removeEventListener('click',gameBoard.mark);
-            spot.removeEventListener('click',evaluateGame);
-            document.querySelector('.reset-btn').classList.toggle('hidden');
-        })
+    function getResult(){
+        return result;
     }
 
-    return{evaluateGame};
+    return{evaluateGame,getResult};
 })();
 
 
